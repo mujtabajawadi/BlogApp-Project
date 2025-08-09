@@ -1,6 +1,7 @@
 import Logo from "./Logo";
 import Input from "./Input";
 import Login from "./Login";
+import { RTE } from "./RTE";
 import Button from "./Button";
 import Select from "./Select";
 import PostCard from "./PostCard";
@@ -10,14 +11,15 @@ import Container from "./container/Container";
 import LogoutButton from "./Header/LogoutButton";
 
 export {
-  Header,
-  Footer,
+  RTE,
   Logo,
-  Container,
-  LogoutButton,
   Input,
   Login,
   Button,
+  Header,
   Select,
+  Footer,
   PostCard,
+  Container,
+  LogoutButton,
 };
