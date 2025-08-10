@@ -6,7 +6,7 @@ import { Logo, LogoutButton, Container } from "../index";
 const Header = () => {
   const navigate = useNavigate();
 
-  const authStatus = useSelector((state) => state.auth.status);
+  const authStatus = useSelector((state) => state.status);
 
   const navItems = [
     {
@@ -42,7 +42,7 @@ const Header = () => {
         <nav className="flex">
           <div className="mr-4">
             <Link to="/">
-              <Logo width="80px" />
+              <Logo width="1px" />
             </Link>
           </div>
           <ul className="flex ml-auto">

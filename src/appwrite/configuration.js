@@ -78,12 +78,12 @@ export class DB_Service {
     }
   }
 
-  async getAllActivePosts() {
+  async getAllActivePosts(queries = [Query.equal("status", "active")]) {
     try {
       return await this.databases.listDocuments(
         systemVariables.appwrite_DATABASE_ID,
         systemVariables.appwrite_COLLECTION_ID,
-        [Query.equal("status", "active")]
+        queries
       );
     } catch (error) {
       console.log(
@@ -107,30 +107,23 @@ export class DB_Service {
       console.log("Appwrite Service Error :: createFile :: error", error);
       return false;
     }
-    }
-    
-    async deleteFile(fileId) {
-        try {
-            await this.storage.deleteFile(
-                systemVariables.appwrite_BUCKET_ID,
-                fileId
-            )
-            return true
-        } catch (error) {
-             console.log(
-               "Appwrite Service Error :: deleteFile :: error",
-               error
-            );
-            return false
-        }
   }
-  
+
+  async deleteFile(fileId) {
+    try {
+      await this.storage.deleteFile(systemVariables.appwrite_BUCKET_ID, fileId);
+      return true;
+    } catch (error) {
+      console.log("Appwrite Service Error :: deleteFile :: error", error);
+      return false;
+    }
+  }
+
   getFilePreview(fileId) {
     return this.storage.getFilePreview(
       systemVariables.appwrite_BUCKET_ID,
       fileId
-
-    )
+    );
   }
 }
 

@@ -17,7 +17,7 @@ const PostForm = ({ post }) => {
       },
     });
 
-  const userData = useSelector((state) => state.user.userData);
+  const userData = useSelector((state) => state.userData);
 
   const submit = async (data) => {
     if (post) {
