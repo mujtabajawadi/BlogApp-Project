@@ -6,11 +6,13 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     obj_DB_Service.getAllActivePosts().then((posts) => {
+      
       if (posts) {
         setPosts(posts.documents);
       }
     });
   }, []);
+
 
   if (posts.length === 0) {
     return (

@@ -13,9 +13,6 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
 
   const login = async (data) => {
-    {
-      /*console.log(data)*/
-    }
     setError("");
     try {
       const session = await obj_AuthService.login(data);

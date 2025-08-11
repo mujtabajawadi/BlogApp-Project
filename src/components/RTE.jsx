@@ -1,8 +1,11 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
+ 
 
-export const RTE = ({ name, control, label, defaultValue = "" }) => {
+const tinymce_api = String(import.meta.env.VITE_TINYMCE_API_KEY)
+
+export const RTE = ({ name, control, label, defaultValue = "Welcome to TinyMCE!" }) => {
   return (
     <div className="w-full">
       {label && <label className="inline-block mb-1 pl-1">{label}</label>}
@@ -12,51 +15,31 @@ export const RTE = ({ name, control, label, defaultValue = "" }) => {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
+            apiKey={tinymce_api}
             initialValue={defaultValue}
             init={{
               initialValue: { defaultValue },
-              height: 500,
-              menubar: false,
+              height: 550,
+              menubar: true,
               plugins: [
-                "Accordion",
-                "Anchor",
-                "Autolink",
-                "Autoresize",
-                "Autosave",
-                "Character Map",
-                "Code",
-                "Code Sample",
-                "Directionality",
-                "Emoticons",
-                "Full Screen",
-                "Help",
-                "Image",
-                "Import CSS",
-                "Insert Date/Time",
-                "Link",
-                "Lists",
-                "List Styles",
-                "Media",
-                "Nonbreaking Space",
-                "Page Break",
-                "Preview",
-                "Quick Toolbars",
-                "Save",
-                "Search and Replace",
-                "Table",
-                "Visual Blocks",
-                "Visual Characters",
-                "Word Count",
+                "anchor",
+                "autolink",
+                "charmap",
+                "codesample",
+                "emoticons",
+                "link",
+                "lists",
+                "media",
+                "searchreplace",
+                "table",
+                "visualblocks",
+                "wordcount",
               ],
               toolbar:
-                "undo redo | formatselect | " +
-                "bold italic backcolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help | link image code fullscreen",
-                content_style:
-                    `body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size:16px }`,
-                }}
-                onEditorChange={onChange}
+                'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+              content_style: `body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size:16px }`,
+            }}
+            onEditorChange={onChange}
           />
         )}
       />

@@ -10,6 +10,7 @@ const EditPost = () => {
     const { slug } = useParams()
     const navigate = useNavigate()
     useEffect(() => {
+        console.log(slug)
         if (slug) {
             obj_DB_Service.getPost(slug).then((post) => {
                 if (post) {

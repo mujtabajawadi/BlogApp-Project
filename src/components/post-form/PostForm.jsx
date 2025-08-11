@@ -6,12 +6,14 @@ import React, { useCallback, useEffect } from "react";
 import obj_DB_Service from "../../appwrite/configuration";
 
 const PostForm = ({ post }) => {
+    console.log(post);
+
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "",
       },
@@ -20,16 +22,17 @@ const PostForm = ({ post }) => {
   const userData = useSelector((state) => state.userData);
 
   const submit = async (data) => {
+    console.log(data)
     if (post) {
       const file = data.image[0]
-        ? obj_DB_Service.createFile(data.image[0])
+        ? await obj_DB_Service.createFile(data.image[0])
         : null;
 
       if (file) {
-        obj_DB_Service.deleteFile(post.featuredImage);
+        await obj_DB_Service.deleteFile(post.featuredImage);
       }
 
-      const dbPost = obj_DB_Service.updatePost(post.$id, {
+      const dbPost = await obj_DB_Service.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
@@ -63,9 +66,7 @@ const PostForm = ({ post }) => {
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
-        setValue("slug", slugTransform(value.title), {
-          shouldValidate: true,
-        });
+        setValue("slug", slugTransform(value.title));
       }
     });
 
@@ -81,7 +82,7 @@ const PostForm = ({ post }) => {
           label="Title :"
           placeholder="Title"
           className="mb-4"
-          {...register("title", { required: true })}
+          {...register("title")}
         />
         <Input
           label="Slug :"
@@ -89,16 +90,14 @@ const PostForm = ({ post }) => {
           className="mb-4"
           {...register("slug", { required: true })}
           onInput={(e) => {
-            setValue("slug", slugTransform(e.currentTarget.value), {
-              shouldValidate: true,
-            });
+            setValue("slug", slugTransform(e.currentTarget.value));
           }}
         />
-        <RTE
-          label="Content :"
-          name="content"
-          control={control}
-          defaultValue={getValues("content")}
+        <Select
+          options={["active", "inactive"]}
+          label="Status"
+          className="mb-4"
+          {...register("status")}
         />
       </div>
       <div className="w-1/3 px-2">
@@ -107,31 +106,33 @@ const PostForm = ({ post }) => {
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: !post })}
+          {...register("image")}
         />
         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteService.getFilePreview(post.featuredImage)}
+              src={obj_DB_Service.getFileView(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
+              width="500px"
             />
           </div>
         )}
-        <Select
-          options={["active", "inactive"]}
-          label="Status"
-          className="mb-4"
-          {...register("status", { required: true })}
-        />
-        <Button
-          type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "Update" : "Submit"}
-        </Button>
       </div>
+      <RTE
+        label="Content :"
+        name="content"
+        className="mr-200"
+        control={control}
+        defaultValue={getValues("content")}
+      />
+      <Button
+        type="submit"
+        bgcolor={post ? "bg-green-500" : undefined}
+        className="w-full mt-8"
+      >
+        {post ? "Update" : "Submit"}
+      </Button>
     </form>
   );
 };

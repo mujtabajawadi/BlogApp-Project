@@ -119,8 +119,9 @@ export class DB_Service {
     }
   }
 
-  getFilePreview(fileId) {
-    return this.storage.getFilePreview(
+  getFileView(fileId) {
+   
+    return this.storage.getFileView(
       systemVariables.appwrite_BUCKET_ID,
       fileId
     );
