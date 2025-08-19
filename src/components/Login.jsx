@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Input, Button, Logo } from "./index";
 import obj_AuthService from "../appwrite/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { login as storeLogin } from "../store/authSlice";
+import { login as authLogin } from "../store/authSlice";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -18,7 +18,8 @@ const Login = () => {
       const session = await obj_AuthService.login(data);
       if (session) {
         const userData = await obj_AuthService.getCurrentUser();
-        if (userData) dispatch(storeLogin(userData));
+        // console.log(userData)
+        if (userData) dispatch(authLogin({userData}));
         navigate("/");
       }
     } catch (error) {

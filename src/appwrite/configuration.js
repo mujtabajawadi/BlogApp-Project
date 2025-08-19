@@ -14,7 +14,7 @@ export class DB_Service {
     this.storage = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+  async createPost({ title, slug, content, featuredImage, status, userId, author }) {
     try {
       return await this.databases.createDocument(
         systemVariables.appwrite_DATABASE_ID,
@@ -26,6 +26,7 @@ export class DB_Service {
           featuredImage,
           status,
           userId,
+          author
         }
       );
     } catch (error) {
@@ -78,18 +79,31 @@ export class DB_Service {
     }
   }
 
-  async getAllActivePosts(queries = [Query.equal("status", "active")]) {
+  async getAllActivePosts(userId) {
     try {
       return await this.databases.listDocuments(
         systemVariables.appwrite_DATABASE_ID,
         systemVariables.appwrite_COLLECTION_ID,
-        queries
+        [Query.equal("status", "active"), Query.notEqual("userId", userId)]
       );
     } catch (error) {
       console.log(
         "Appwrite Service Error :: getAllActivePosts :: error",
         error
       );
+      return false;
+    }
+  }
+
+  async getUserPosts(userId) {
+    try {
+      return await this.databases.listDocuments(
+        systemVariables.appwrite_DATABASE_ID,
+        systemVariables.appwrite_COLLECTION_ID,
+        [Query.equal("userId", userId)]
+      );
+    } catch (error) {
+      console.log("Appwrite Service Error :: getUserPosts :: error", error);
       return false;
     }
   }
@@ -120,11 +134,7 @@ export class DB_Service {
   }
 
   getFileView(fileId) {
-   
-    return this.storage.getFileView(
-      systemVariables.appwrite_BUCKET_ID,
-      fileId
-    );
+    return this.storage.getFileView(systemVariables.appwrite_BUCKET_ID, fileId);
   }
 }
 

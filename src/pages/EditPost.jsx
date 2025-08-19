@@ -10,9 +10,9 @@ const EditPost = () => {
     const { slug } = useParams()
     const navigate = useNavigate()
     useEffect(() => {
-        console.log(slug)
         if (slug) {
             obj_DB_Service.getPost(slug).then((post) => {
+                console.log(post)
                 if (post) {
                     setPost(post)
                 } else {
@@ -25,6 +25,7 @@ const EditPost = () => {
     },[slug, navigate])
 
 
+    console.log(post)
     return post ? (
         <div className='py-8'>
             <Container>

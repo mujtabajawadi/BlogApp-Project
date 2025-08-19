@@ -6,7 +6,7 @@ import React, { useCallback, useEffect } from "react";
 import obj_DB_Service from "../../appwrite/configuration";
 
 const PostForm = ({ post }) => {
-    console.log(post);
+
 
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -20,6 +20,7 @@ const PostForm = ({ post }) => {
     });
 
   const userData = useSelector((state) => state.userData);
+
 
   const submit = async (data) => {
     console.log(data)
@@ -48,11 +49,14 @@ const PostForm = ({ post }) => {
         const dbPost = await obj_DB_Service.createPost({
           ...data,
           userId: userData.$id,
+          author: userData.name
         });
         navigate(`/post/${dbPost.$id}`);
+        console.log(dbPost)
       }
     }
   };
+
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string")
@@ -74,6 +78,8 @@ const PostForm = ({ post }) => {
       subscription.unsubscribe();
     };
   }, [watch, slugTransform, setValue]);
+
+
 
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -101,6 +107,16 @@ const PostForm = ({ post }) => {
         />
       </div>
       <div className="w-1/3 px-2">
+        {post && (
+          <div className="w-full mb-4">
+            <img
+              src={obj_DB_Service.getFileView(post.featuredImage)}
+              alt={post.title}
+              className="rounded-lg"
+              width="220px"
+            />
+          </div>
+        )}
         <Input
           label="Featured Image :"
           type="file"
@@ -108,16 +124,6 @@ const PostForm = ({ post }) => {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image")}
         />
-        {post && (
-          <div className="w-full mb-4">
-            <img
-              src={obj_DB_Service.getFileView(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
-              width="500px"
-            />
-          </div>
-        )}
       </div>
       <RTE
         label="Content :"

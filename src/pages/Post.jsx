@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import obj_DB_Service from "../appwrite/configuration";
+import obj_AuthService from "../appwrite/auth";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
@@ -22,6 +23,8 @@ const Post = () => {
       });
     } else navigate("/");
   }, [slug, navigate]);
+  
+
 
   const deletePost = () => {
     obj_DB_Service.deletePost(post.$id).then((status) => {
@@ -31,7 +34,6 @@ const Post = () => {
       }
     });
   };
-
   return post ? (
     <div className="py-8">
       <Container>
@@ -59,6 +61,7 @@ const Post = () => {
           <h1 className="text-2xl font-bold">{post.title}</h1>
         </div>
         <div className="browser-css">{parse(post.content)}</div>
+        <h3>Author: { post.author}</h3>
       </Container>
     </div>
   ) : null;

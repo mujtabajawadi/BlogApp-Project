@@ -19,7 +19,7 @@ export const RTE = ({ name, control, label, defaultValue = "Welcome to TinyMCE!"
             initialValue={defaultValue}
             init={{
               initialValue: { defaultValue },
-              height: 550,
+              height: 200,
               menubar: true,
               plugins: [
                 "anchor",

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo, LogoutButton, Container } from "../index";
+import obj_AuthService from "../../appwrite/auth";
 
 const Header = () => {
+  const [userName, setUserName] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const authStatus = useSelector((state) => state.status);
@@ -36,6 +39,35 @@ const Header = () => {
     },
   ];
 
+  const getUserName = async () => {
+    if (!authStatus) return; 
+
+    try {
+      // setLoading(true);
+      const userData = await obj_AuthService.getCurrentUser();
+
+      if (userData && userData.name) {
+        setUserName(userData.name);
+      }
+    } catch (error) {
+      console.log("Error fetching user data:", error);
+      setUserName("");
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserName();
+  }, [authStatus]); 
+
+
+  useEffect(() => {
+    if (!authStatus) {
+      setUserName("");
+    }
+  }, [authStatus]);
+
   return (
     <header className="py-3 shadow bg-gray-500">
       <Container>
@@ -44,6 +76,7 @@ const Header = () => {
             <Link to="/">
               <Logo width="1px" />
             </Link>
+            {authStatus && userName && <span>{userName}</span>}
           </div>
           <ul className="flex ml-auto">
             {navItems.map((item) =>
@@ -58,13 +91,13 @@ const Header = () => {
                 </li>
               ) : null
             )}
-            {
-              authStatus && (
+            {authStatus && (
+              <>
                 <li>
-                  <LogoutButton/>
+                  <LogoutButton />
                 </li>
-              )
-            }
+              </>
+            )}
           </ul>
         </nav>
       </Container>
