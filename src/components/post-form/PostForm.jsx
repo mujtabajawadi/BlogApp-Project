@@ -7,7 +7,7 @@ import obj_DB_Service from "../../appwrite/configuration";
 
 const PostForm = ({ post }) => {
 
-
+console.log(post)
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
@@ -83,12 +83,12 @@ const PostForm = ({ post }) => {
 
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+      <div className="w-full px-2">
         <Input
           label="Title :"
           placeholder="Title"
           className="mb-4"
-          {...register("title")}
+          {...register("title", { required: true })}
         />
         <Input
           label="Slug :"
@@ -99,14 +99,17 @@ const PostForm = ({ post }) => {
             setValue("slug", slugTransform(e.currentTarget.value));
           }}
         />
+        <label htmlFor="poststatus">Select Post Status :</label>
         <Select
+          id='postStatus'
+          label="Status :"
+          type='select'
           options={["active", "inactive"]}
-          label="Status"
           className="mb-4"
-          {...register("status")}
+          {...register("status", { required: true })}
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="w-full px-2">
         {post && (
           <div className="w-full mb-4">
             <img
@@ -122,7 +125,7 @@ const PostForm = ({ post }) => {
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image")}
+          {...register("image", { required: true })}
         />
       </div>
       <RTE

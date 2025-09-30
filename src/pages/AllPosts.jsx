@@ -5,35 +5,29 @@ import { useSelector } from "react-redux";
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
-   const userData =  useSelector((state) => state.userData);
-   const authStatus =  useSelector((state) => state.status);
+  const userData = useSelector((state) => state.userData);
+  const authStatus = useSelector((state) => state.status);
+
 
   useEffect(() => {
- 
-    
-    // console.log("userData", userData);
     const fetchPosts = async () => {
-
-
-
       try {
-           
-         const posts = await obj_DB_Service.getAllActivePosts(
-           userData && userData.$id
-         );
-         console.log(posts.documents);
-         if (posts) {
-           setPosts(posts.documents);
-         }
-       } catch (error) {
-         console.log(error);
-       } finally {
-         if (authStatus === false) {
-           setPosts([]);
-         }
-       }
-    }
-   fetchPosts()
+        const posts = await obj_DB_Service.getAllActivePosts(
+          userData && userData.$id
+        );
+       
+        if (posts) {
+          setPosts(posts.documents);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        if (authStatus === false) {
+          setPosts([]);
+        }
+      }
+    };
+    fetchPosts();
   }, [userData, authStatus]);
 
 
@@ -41,8 +35,8 @@ const AllPosts = () => {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
-          <div className="flex flex-wrap">
-            <div className="p-2 w-full">
+          <div className="grid grid-cols-1 gap-4">
+            <div className="p-2">
               <h1 className="text-2xl font-bold text-red-700">
                 No post found!
               </h1>
@@ -53,11 +47,11 @@ const AllPosts = () => {
     );
   } else {
     return (
-      <div className="w-full py-8">
-        <Container>
-          <div className="flex flex-wrap">
+      <div className="w-full flex flex-col py-8">
+        <Container >
+          <div className="grid grid-cols-1 w-full justify-center items-center gap-4">
             {posts.map((post) => (
-              <div className="p-2 w-1/4" key={post.$id}>
+              <div className="p-2" key={post.$id}>
                 <PostCard {...post} />
               </div>
             ))}

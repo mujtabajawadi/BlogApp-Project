@@ -37,31 +37,34 @@ const Post = () => {
   return post ? (
     <div className="py-8">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+        <div className="w-full flex flex-col justify-center mb-4 relative rounded-xl p-2">
+          <div className="w-full mb-6">
+            <h1 className="text-3xl font-sans font-bold">{post.title}</h1>
+          </div>
+          <h3>
+            by <span className="font-mono italic">{post.author}</span>
+          </h3>
+
           <img
             src={obj_DB_Service.getFileView(post.featuredImage)}
             alt={post.title}
-            className="rounded-xl"
-            width="500px"          />
+            className="rounded-xl w-full mt-10"
+          />
+        </div>
 
-          {isAuthor && (
-            <div className="absolute right-6 top-6">
-              <Link to={`/edit-post/${post.$id}`}>
-                <Button bgcolor="bg-green-500" className="mr-3">
-                  Edit
-                </Button>
-              </Link>
-              <Button bgcolor="bg-red-500" onClick={deletePost}>
-                Delete
+        <div className="browser-css font-serif">{parse(post.content)}</div>
+        {isAuthor && (
+          <div className="flex justify-around mt-5">
+            <Link to={`/edit-post/${post.$id}`}>
+              <Button bgcolor="bg-green-500" className="mr-3">
+                Edit Post
               </Button>
-            </div>
-          )}
-        </div>
-        <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
-        </div>
-        <div className="browser-css">{parse(post.content)}</div>
-        <h3>Author: { post.author}</h3>
+            </Link>
+            <Button bgcolor="bg-red-500" onClick={deletePost}>
+              Delete Post
+            </Button>
+          </div>
+        )}
       </Container>
     </div>
   ) : null;

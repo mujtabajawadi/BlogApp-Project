@@ -23,16 +23,19 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  return !loading ?
-    <div className="min-h-screen flex flex-wrap content-between bg-gray-500">
-      <div className="w-full block">
+  return !loading ? (
+    <div className="h-screen w-screen overflow-x-hidden flex flex-col flex-wrap content-between">
+      <div className="w-full  flex-1 flex flex-col">
         <Header />
-        <main>
-          <Outlet/>
+        <main className="flex-1 min-w-dvw">
+          <Outlet />
         </main>
-        <Footer/>
+        <Footer />
       </div>
-    </div> : <div>Loading...</div>;
+    </div>
+  ) : (
+    <div>Loading...</div>
+  );
 }
 
 export default App;
