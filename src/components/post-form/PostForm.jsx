@@ -2,10 +2,15 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Input, RTE, Select } from "../index";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import obj_DB_Service from "../../appwrite/configuration";
 
 const PostForm = ({ post }) => {
+
+  const [imagePreviewURL, setImagePreviewURL] = useState(null)
+
+ 
+
 
 console.log(post)
   const navigate = useNavigate();
@@ -18,6 +23,23 @@ console.log(post)
         status: post?.status || "",
       },
     });
+  
+  
+   const handleImageChange = (event) => {
+     const file = event.target.files[0];
+
+     if (file) {
+       setValue("image", file, { shouldValidate: true });
+       const reader = new FileReader();
+       reader.onloadend = () => {
+         setImagePreviewURL(reader.result);
+       };
+       reader.readAsDataURL(file);
+     } else {
+       setValue("image", null);
+       setImagePreviewURL(null);
+     }
+   };
 
   const userData = useSelector((state) => state.userData);
 
@@ -25,8 +47,8 @@ console.log(post)
   const submit = async (data) => {
     console.log(data)
     if (post) {
-      const file = data.image[0]
-        ? await obj_DB_Service.createFile(data.image[0])
+      const file = data.image
+        ? await obj_DB_Service.createFile(data.image)
         : null;
 
       if (file) {
@@ -41,7 +63,7 @@ console.log(post)
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      const file = await obj_DB_Service.createFile(data.image[0]);
+      const file = await obj_DB_Service.createFile(data.image);
 
       if (file) {
         const fileId = file.$id;
@@ -101,9 +123,9 @@ console.log(post)
         />
         <label htmlFor="poststatus">Select Post Status :</label>
         <Select
-          id='postStatus'
+          id="postStatus"
           label="Status :"
-          type='select'
+          type="select"
           options={["active", "inactive"]}
           className="mb-4"
           {...register("status", { required: true })}
@@ -125,8 +147,19 @@ console.log(post)
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: true })}
+          // {...register("image", { required: true })}
+          onChange={handleImageChange}
         />
+        {imagePreviewURL && (
+          <div style={{ marginTop: "20px" }}>
+            <h4>Image Preview:</h4>
+            <img
+              src={imagePreviewURL}
+              alt="Post Preview"
+              style={{ maxWidth: "100%", maxHeight: "300px", display: "block" }}
+            />
+          </div>
+        )}
       </div>
       <RTE
         label="Content :"
