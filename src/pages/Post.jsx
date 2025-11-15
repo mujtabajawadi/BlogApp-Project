@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 const Post = () => {
   const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -16,10 +17,13 @@ const Post = () => {
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
+    setIsLoading(true)
     if (slug) {
       obj_DB_Service.getPost(slug).then((post) => {
-        if (post) setPost(post);
-        else navigate("/");
+        if (post) {
+          setPost(post)
+          setIsLoading(false)
+        } else navigate("/");
       });
     } else navigate("/");
   }, [slug, navigate]);
@@ -34,7 +38,25 @@ const Post = () => {
       }
     });
   };
-  return post ? (
+
+
+
+   if (isLoading) {
+      return (
+        <div className="w-full py-8 mt-4 text-center">
+          <Container>
+            <div className="flex flex-wrap">
+              <div className="p-2 w-full">
+                <h1 className="text-2xl font-bold">Loading Posts...</h1>
+              </div>
+            </div>
+          </Container>
+        </div>
+      );
+  }
+  
+
+  return(!isLoading && post) ? (
     <div className="py-8">
       <Container>
         <div className="w-full flex flex-col justify-center mb-4 relative rounded-xl p-2">
@@ -49,6 +71,7 @@ const Post = () => {
             src={obj_DB_Service.getFileView(post.featuredImage)}
             alt={post.title}
             className="rounded-xl w-full mt-10"
+            loading="lazy"
           />
         </div>
 
@@ -56,11 +79,11 @@ const Post = () => {
         {isAuthor && (
           <div className="flex justify-around mt-5">
             <Link to={`/edit-post/${post.$id}`}>
-              <Button bgcolor="bg-green-500" className="mr-3">
+              <Button bgcolor="bg-green-500" disabled={isLoading} className="mr-3 cursor-pointer">
                 Edit Post
               </Button>
             </Link>
-            <Button bgcolor="bg-red-500" onClick={deletePost}>
+            <Button bgcolor="bg-red-500" className="cursor-pointer" disabled={isLoading}  onClick={deletePost}>
               Delete Post
             </Button>
           </div>

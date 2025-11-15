@@ -10,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState:{isSubmitting} } = useForm();
 
   const login = async (data) => {
     setError("");
@@ -73,8 +73,11 @@ const Login = () => {
                 minLength: 8,
               })}
             />
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full" disabled={isSubmitting} style={{
+              backgroundColor: isSubmitting ? "grey" : "blue",
+              cursor: isSubmitting? "not-allowed": "pointer",
+            }}>
+              {isSubmitting ? "Logging-In..." : "Login"}
             </Button>
           </div>
         </form>

@@ -14,7 +14,7 @@ const PostForm = ({ post }) => {
 
 console.log(post)
   const navigate = useNavigate();
-  const { register, handleSubmit, watch, setValue, control, getValues } =
+  const { register, handleSubmit, watch, setValue, control, getValues, formState:{isSubmitting} } =
     useForm({
       defaultValues: {
         title: post?.title || "",
@@ -172,8 +172,14 @@ console.log(post)
         type="submit"
         bgcolor={post ? "bg-green-500" : undefined}
         className="w-full mt-8"
+        style={{
+          backgroundColor: isSubmitting ? "grey" : "blue",
+          cursor: isSubmitting?"not-allowed":"pointer"
+        }}
       >
-        {post ? "Update" : "Submit"}
+        {
+          isSubmitting ? "Submitting..." :  post? "Update": "Submit" 
+        }
       </Button>
     </form>
   );

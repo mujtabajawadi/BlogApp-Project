@@ -36,7 +36,7 @@ const PostCard = ({ $id, title, content, featuredImage, author }) => {
 
           </div>
           <div
-            className="w-[70px] h-[70px]  right-2 sm:w-[100px] sm:h-[100px] rounded-full hidden sm:block"
+            className="w-[70px] h-[70px]  right-2 sm:w-[100px] sm:h-[100px] rounded-full hidden sm:block" loading="lazy"
             style={{
               background: `url(${obj_DB_Service.getFileView(featuredImage)})`,
               // backgroundPosition: 'center',

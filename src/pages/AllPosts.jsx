@@ -5,11 +5,13 @@ import { useSelector } from "react-redux";
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const userData = useSelector((state) => state.userData);
   const authStatus = useSelector((state) => state.status);
 
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchPosts = async () => {
       try {
         const posts = await obj_DB_Service.getAllActivePosts(
@@ -22,6 +24,7 @@ const AllPosts = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        setIsLoading(false)
         if (authStatus === false) {
           setPosts([]);
         }
@@ -31,7 +34,21 @@ const AllPosts = () => {
   }, [userData, authStatus]);
 
 
-  if (posts.length === 0) {
+  if (isLoading) {
+    return (
+      <div className="w-full py-8 mt-4 text-center">
+        <Container>
+          <div className="flex flex-wrap">
+            <div className="p-2 w-full">
+              <h1 className="text-2xl font-bold">Loading Posts...</h1>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (!isLoading && posts.length === 0) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
@@ -45,7 +62,9 @@ const AllPosts = () => {
         </Container>
       </div>
     );
-  } else {
+  } 
+
+  
     return (
       <div className="w-full flex flex-col py-8">
         <Container >
@@ -59,7 +78,6 @@ const AllPosts = () => {
         </Container>
       </div>
     );
-  }
 };
 
 export default AllPosts;
