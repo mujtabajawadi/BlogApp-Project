@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Container, PostForm } from "../components/index";
+import { Container, Loader, PostForm } from "../components/index";
 import obj_DB_Service from '../appwrite/configuration';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -31,15 +31,7 @@ const EditPost = () => {
 
    if (isLoading) {
       return (
-        <div className="w-full py-8 mt-4 text-center">
-          <Container>
-            <div className="flex flex-wrap">
-              <div className="p-2 w-full">
-                <h1 className="text-2xl font-bold">Loading Posts...</h1>
-              </div>
-            </div>
-          </Container>
-        </div>
+        <Loader className="w-screen h-[75vh] flex items-center justify-center" />
       );
   }
 

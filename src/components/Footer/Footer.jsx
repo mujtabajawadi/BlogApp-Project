@@ -4,7 +4,7 @@ import { Container, Logo } from "../index";
 
 const Footer = () => {
   return (
-    <section className="relative overflow-hidden py-4 px-[12px]  border-t-1 border-t-black sm:flex justify-between items-center">
+    <section className="relative overflow-hidden py-4 px-[12px]  border-t-1 border-t-black sm:flex justify-between items-center shadow">
       <Container>
         <div className="mb-4 block sm:inline-flex  items-center">
           <Logo width="5px" />

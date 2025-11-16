@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import obj_DB_Service from "../appwrite/configuration";
 import obj_AuthService from "../appwrite/auth";
-import { Button, Container } from "../components";
+import { Button, Container, Loader } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
@@ -43,15 +43,7 @@ const Post = () => {
 
    if (isLoading) {
       return (
-        <div className="w-full py-8 mt-4 text-center">
-          <Container>
-            <div className="flex flex-wrap">
-              <div className="p-2 w-full">
-                <h1 className="text-2xl font-bold">Loading Posts...</h1>
-              </div>
-            </div>
-          </Container>
-        </div>
+        <Loader className="w-screen h-[75vh] flex items-center justify-center " />
       );
   }
   

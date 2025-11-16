@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import obj_AuthService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
 import "./App.css";
-import { Header, Footer } from "./components/index";
+import { Header, Footer, Loader } from "./components/index";
 import {Outlet} from 'react-router-dom'
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
       </div>
     </div>
   ) : (
-    <div>Loading...</div>
+    <Loader className="w-screen h-[75vh] flex items-center justify-center" />
   );
 }
 

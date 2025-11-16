@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import Button from "./Button";
 import Select from "./Select";
 import PostCard from "./PostCard";
+import Loader from "./Loader.jsx";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import AuthLayout from "./AuthLayout";
@@ -22,6 +23,7 @@ export {
   Button,
   Header,
   Select,
+  Loader,
   Footer,
   PostForm,
   PostCard,

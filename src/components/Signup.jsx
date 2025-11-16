@@ -88,7 +88,7 @@ const Signup = () => {
               cursor: isSubmitting? "not-allowed" : "pointer"
             }}>
               {
-                isSubmitting ? "Submitting..." : "Create Account"
+                isSubmitting ? "Signing-In..." : "Create Account"
               }
             </Button>
           </div>

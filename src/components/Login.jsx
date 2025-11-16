@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Input, Button, Logo } from "./index";
+import { Input, Button, Logo, Loader } from "./index";
 import obj_AuthService from "../appwrite/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../store/authSlice";
@@ -10,7 +10,11 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState:{isSubmitting} } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
 
   const login = async (data) => {
     setError("");
@@ -19,7 +23,7 @@ const Login = () => {
       if (session) {
         const userData = await obj_AuthService.getCurrentUser();
         // console.log(userData)
-        if (userData) dispatch(authLogin({userData}));
+        if (userData) dispatch(authLogin({ userData }));
         navigate("/");
       }
     } catch (error) {
@@ -73,11 +77,20 @@ const Login = () => {
                 minLength: 8,
               })}
             />
-            <Button type="submit" className="w-full" disabled={isSubmitting} style={{
-              backgroundColor: isSubmitting ? "grey" : "blue",
-              cursor: isSubmitting? "not-allowed": "pointer",
-            }}>
-              {isSubmitting ? "Logging-In..." : "Login"}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: isSubmitting ? "transparent" : "blue",
+                cursor: isSubmitting ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSubmitting ? (
+                <Loader className="flex justify-center items-center" />
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
         </form>

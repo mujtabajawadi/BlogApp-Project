@@ -10,9 +10,6 @@ const PostForm = ({ post }) => {
   const [imagePreviewURL, setImagePreviewURL] = useState(null)
 
  
-
-
-console.log(post)
   const navigate = useNavigate();
   const { register, handleSubmit, watch, setValue, control, getValues, formState:{isSubmitting} } =
     useForm({

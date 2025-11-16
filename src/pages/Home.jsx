@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import obj_DB_Service from "../appwrite/configuration";
-import { Container, PostCard } from "../components/index";
+import { Container, Loader, PostCard } from "../components/index";
 import { useSelector } from "react-redux";
 
 const Home = () => {
@@ -36,17 +36,23 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full py-8 mt-4 text-center">
-        <Container>
-          <div className="flex flex-wrap">
-            <div className="p-2 w-full">
-              <h1 className="text-2xl font-bold">Loading Posts...</h1>
-            </div>
-          </div>
-        </Container>
-      </div>
+      <Loader className="w-screen h-[75vh] flex items-center justify-center " />
     );
   }
+
+  //{
+  //   return (
+  //     <div className="w-full py-8 mt-4 text-center">
+  //       <Container>
+  //         <div className="flex flex-wrap">
+  //           <div className="p-2 w-full">
+  //             <h1 className="text-2xl font-bold">Loading Posts...</h1>
+  //           </div>
+  //         </div>
+  //       </Container>
+  //     </div>
+  //   );
+  // }
 
   if (posts.length === 0) {
     return (
