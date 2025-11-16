@@ -1,14 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import obj_AuthService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
 import "./App.css";
 import { Header, Footer, Loader } from "./components/index";
-import {Outlet} from 'react-router-dom'
+import {Outlet, useLocation, useNavigate} from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const authStatus = useSelector((state)=> state.status)
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const location = useLocation()
+
+
+  const pagesWithoutLayout= ["/welcome", "/signup", "/login"]
+  const showLayout = !pagesWithoutLayout.includes(location.pathname)
 
   useEffect(() => {
     obj_AuthService
@@ -23,14 +30,25 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      if (!authStatus && location.pathname === "/") {
+        navigate("/welcome")
+      } else if (authStatus && location.pathname === "/welcome") {
+        navigate("/")
+      }
+      
+    }
+  },[loading, authStatus, location.pathname, navigate])
+
   return !loading ? (
     <div className="h-screen w-screen overflow-x-hidden flex flex-col flex-wrap content-between">
       <div className="w-full  flex-1 flex flex-col">
-        <Header />
+        { showLayout && <Header />}
         <main className="flex-1 min-w-dvw">
           <Outlet />
         </main>
-        <Footer />
+       {showLayout && <Footer />}
       </div>
     </div>
   ) : (

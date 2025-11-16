@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {Loader} from "./index";
 
 const AuthLayout = ({ children, requiresAuthentication = true }) => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const AuthLayout = ({ children, requiresAuthentication = true }) => {
     }
     setLoading(false);
   }, [authStatus, navigate, requiresAuthentication]);
-  return loading ? <div>Loading...</div> : <>{children}</>;
+  return loading ? <Loader/> : <>{children}</>;
 };
 
 export default AuthLayout;

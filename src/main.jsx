@@ -12,6 +12,7 @@ import AddPost from "./pages/AddPost.jsx";
 import EditPost from "./pages/EditPost.jsx";
 import Post from "./pages/Post.jsx";
 import { RouterProvider } from "react-router";
+import Welcome from "./pages/Welcome.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/welcome",
+        element: <Welcome/>
       },
       {
         path: "/login",
