@@ -3,10 +3,16 @@ import { NavLink } from "react-router-dom";
 function Welcome() {
   return (
     <div className="welcome-container">
-      <h1>Welcome to the Blog Marshal!</h1>
-      <p>Please sign up or log in to continue.</p>
-      <NavLink to="/signup">
-        <button>Sign Up</button>
+      <div className="tagline">
+      <p >Ideas</p>
+      <p>written & published</p>
+      </div>
+      <div className="slogan">
+        <p>A place where ideas are crafted and find their readers</p>
+      </div>
+
+      <NavLink to="/login">
+        <button>Login</button>
       </NavLink>
     </div>
   );

@@ -1,4 +1,12 @@
 /* HTML: <div class="loader"></div> */
+body{
+    font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
 .loader {
   width: fit-content;
   font-weight: bold;
@@ -19,4 +27,22 @@
 
 @keyframes l24{
   100%{background-position: left}
+}
+
+
+.tagline{
+  font-family: "Fredericka the Great", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 5rem;
+  line-height: 95%;
+
+}
+.slogan{
+  font-family: "Urbanist", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
