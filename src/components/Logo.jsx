@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Logo = ({width = '5px'}) => {
+const Logo = ({height = '3rem'}) => {
   return (
     <img
       src='/images/bm-logo.png'
       alt=""
-      width='100px'
+      width='100rem'
     />
   );
 }

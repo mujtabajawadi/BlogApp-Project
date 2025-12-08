@@ -11,7 +11,7 @@ const AuthLayout = ({ children, requiresAuthentication = true }) => {
 
   useEffect(() => {
     if (requiresAuthentication && authStatus !== requiresAuthentication) {
-        navigate("/login");
+        navigate("/welcome");
         return
     } else if (!requiresAuthentication && authStatus !== requiresAuthentication) {
         navigate("/");

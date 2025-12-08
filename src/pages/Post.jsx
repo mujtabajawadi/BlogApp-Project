@@ -52,22 +52,24 @@ const Post = () => {
     <div className="py-8">
       <Container>
         <div className="w-full flex flex-col justify-center mb-4 relative rounded-xl p-2">
-          <div className="w-full mb-6">
-            <h1 className="text-3xl font-sans font-bold">{post.title}</h1>
+          <div className="w-full mb-1">
+            <h1 className="text-[3rem] font-sans font-bold">{post.title}</h1>
           </div>
           <h3>
             by <span className="font-mono italic">{post.author}</span>
           </h3>
 
+          <div className="flex h-fit mt-2 sm:p-15 justify-center items-start overflow-hidden w-full bg-gray-50">
           <img
             src={obj_DB_Service.getFileView(post.featuredImage)}
             alt={post.title}
-            className="rounded-xl w-full mt-10"
+            className="rounded-2xl sm:h-[30rem]"
             loading="lazy"
-          />
+            />
+          </div>
         </div>
 
-        <div className="browser-css font-serif">{parse(post.content)}</div>
+        <div className="browser-css font-[lora] sm:pl-40 sm:pr-40">{parse(post.content)}</div>
         {isAuthor && (
           <div className="flex justify-around mt-5">
             <Link to={`/edit-post/${post.$id}`}>

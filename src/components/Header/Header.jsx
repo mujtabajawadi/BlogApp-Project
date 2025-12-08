@@ -6,7 +6,6 @@ import obj_AuthService from "../../appwrite/auth";
 
 const Header = () => {
   const [userName, setUserName] = useState('')
-  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const authStatus = useSelector((state) => state.status);
@@ -72,12 +71,13 @@ const Header = () => {
     <header className="py-5 shadow">
       <Container>
         <nav className="flex">
-          <div className="mr-4">
+          <div>
             <Link to="/">
-              <Logo width="1px" />
+              <Logo/>
             </Link>
             {authStatus && userName && <span>{userName}</span>}
           </div>
+          
           <ul className="flex ml-auto">
             {navItems.map((item) =>
               item.active ? (

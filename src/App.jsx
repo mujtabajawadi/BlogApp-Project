@@ -42,10 +42,10 @@ function App() {
   },[loading, authStatus, location.pathname, navigate])
 
   return !loading ? (
-    <div className="h-screen w-screen overflow-x-hidden flex flex-col flex-wrap content-between">
+    <div className="h-[100dvh] w-screen overflow-x-hidden flex flex-col flex-wrap content-between">
       <div className="w-full  flex-1 flex flex-col">
         { showLayout && <Header />}
-        <main className="flex-1 min-w-dvw">
+        <main className="flex-1 flex justify-center">
           <Outlet />
         </main>
        {showLayout && <Footer />}

@@ -13,6 +13,7 @@ import EditPost from "./pages/EditPost.jsx";
 import Post from "./pages/Post.jsx";
 import { RouterProvider } from "react-router";
 import Welcome from "./pages/Welcome.jsx";
+import About from "./pages/About.jsx";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "/about",
+    element: <About/>
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(

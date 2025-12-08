@@ -75,9 +75,9 @@ const Home = () => {
   return (
     <div className="w-full py-8">
       <Container>
-        <div className="grid grid-cols-1 w-[100%]  justify-center items-center gap-4">
+        <div className="grid grid-cols-1 w-[100%]  justify-center  gap-4">
           {posts.map((post) => (
-            <div className="p-2" key={post.$id}>
+            <div className="p-2 sm:flex sm:justify-center" key={post.$id}>
               <PostCard {...post} />
             </div>
           ))}

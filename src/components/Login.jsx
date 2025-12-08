@@ -66,6 +66,7 @@ const Login = () => {
                     "Email address must be a valid address",
                 },
               })}
+              autoComplete="on"
             />
             <Input
               label="Password: "
