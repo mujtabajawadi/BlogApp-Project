@@ -12,7 +12,7 @@ function Welcome() {
             <NavLink to="/about" className="hidden md:block">
               <li>Our Story</li>
             </NavLink>
-            <NavLink to="/add-post" className="hidden  md:block">
+            <NavLink to="/login" className="hidden  md:block">
               <li>Write</li>
             </NavLink>
             <NavLink to="/login" className="hidden  md:block">

@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/welcome",
-        element: <Welcome/>
+        element: <Welcome />,
       },
       {
         path: "/login",
@@ -45,39 +45,43 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/all-posts',
+        path: "/all-posts",
         element: (
           <AuthLayout requiresAuthentication={true}>
-            <AllPosts/>
+            <AllPosts />
           </AuthLayout>
-        )
+        ),
       },
       {
-        path: '/add-post',
+        path: "/add-post",
         element: (
           <AuthLayout requiresAuthentication={true}>
-            <AddPost/>
+            <AddPost />
           </AuthLayout>
-        )
+        ),
       },
       {
-        path: '/edit-post/:slug',
+        path: "/edit-post/:slug",
         element: (
           <AuthLayout requiresAuthentication={true}>
-            <EditPost/>
+            <EditPost />
           </AuthLayout>
-        )
+        ),
       },
       {
-        path: '/post/:slug',
-        element: <Post/>
-      }
+        path: "/post/:slug",
+        element: (
+          <AuthLayout requiresAuthentication={true}>
+            <Post />
+          </AuthLayout>
+        ),
+      },
     ],
   },
   {
     path: "/about",
-    element: <About/>
-  }
+    element: <About />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
